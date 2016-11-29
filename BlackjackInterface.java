@@ -107,6 +107,9 @@ public class BlackjackInterface extends JFrame{
 		The array is cleared to begin the program
 	*/
 	public void dealAction(ActionEvent e) {
+		dealerSumField.setText("" + dealerSum);
+		playerSumField.setText("" + playerSum);
+
 		blackjack.dealFirstCards(blackjack.playerCards, blackjack.actualPlayerValues);
 		blackjack.dealFirstCards(blackjack.dealerCards, blackjack.actualDealerValues);
 
@@ -124,11 +127,44 @@ public class BlackjackInterface extends JFrame{
 		blackjack.setCardNames(blackjack.playerCards, blackjack.playerCardsNames,
 		blackjack.actualPlayerValues);
 		displayCards();
+		boolean over = blackjack.checkIfOver(blackjack.actualPlayerValues);
+		if(over==true) {
+			JOptionPane.showMessageDialog(this, "Bust! You lose ma'fucker" + "\n" +
+			"New game starting");
+		}
 	}
 
 	// Stay Action if user hasn't yet busted
 	public void stayAction(ActionEvent e) {
+		dealerCards.setText("");
 
+		for(int i=0; i<blackjack.dealerCardsNames.length; i++) {
+			String dealerCardName = blackjack.dealerCardsNames[i];
+				if(dealerCardName.equals("0") == false) {
+					dealerCards.append("" + dealerCardName + "\n");
+				}
+		}
+
+		dealerSum = sumCards(blackjack.actualDealerValues, dealerSum);
+		dealerSumField.setText("" + dealerSum);
+
+		while(dealerSum<16) {
+
+			blackjack.hitMe(blackjack.dealerCards, blackjack.actualDealerValues);
+			blackjack.setCardNames(blackjack.dealerCards, blackjack.dealerCardsNames,
+			blackjack.actualDealerValues);
+
+			dealerSum = sumCards(blackjack.actualDealerValues, dealerSum);
+			dealerSumField.setText("" + dealerSum);
+			dealerCards.setText("");
+
+			for(int i=0; i<blackjack.dealerCardsNames.length; i++) {
+				String dealerCardName = blackjack.dealerCardsNames[i];
+					if(dealerCardName.equals("0") == false) {
+						dealerCards.append("" + dealerCardName + "\n");
+					}
+			}
+		}
 	}
 
 	//END OF BUTTON PRESS ACTIONS
@@ -162,18 +198,18 @@ public class BlackjackInterface extends JFrame{
 			}
 		}
 
-		playerSum = sumCards(blackjack.actualPlayerValues);
+		playerSum = sumCards(blackjack.actualPlayerValues, playerSum);
 		playerSumField.setText("" + playerSum);
+		dealerSumField.setText("" + blackjack.actualDealerValues[0]);
 	}
 
-	private int sumCards(int[] actualValues) {
-		playerSum = 0;
+	private int sumCards(int[] actualValues, int sum) {
+		sum = 0;
 
 		for(int i=0; i<actualValues.length; i++) {
-			playerSum += actualValues[i];
+			sum += actualValues[i];
 		}
 
-		return playerSum;
+		return sum;
 	}
-
 }

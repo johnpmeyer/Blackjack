@@ -103,8 +103,9 @@ public class Blackjack {
 			*/
 			} else if (compareNumber==14) {
 				int currentSum=0;
-				for(int k=0;k<cardNumbersArray.length;k++) {
-					currentSum += cardNumbersArray[k];
+				int arrayLength = cardNumbersArray.length;
+				for(int k=arrayLength-1 ; arrayLength>0; k-=1) {
+					currentSum += actualValueArray[k];
 				}
 				currentSum = currentSum-14;
 
@@ -176,15 +177,6 @@ public class Blackjack {
 		return false;
 	}
 
-	/* This method will take place once playerDone = true. As in real
-	table blackjack, the dealer only plays after the player will select a button
-	that indicates they are done playing.
-	*/
-	public void dealerPlays() {
-		while(dealerSum<16) {
-			hitMe(dealerCards, actualDealerValues);
-		}
-	}
 
 	/* This method simply checks the user versus the dealer. Whoever has the greater
 	number wins, provided he/she is not over 21. In the event of a tie, the dealer
