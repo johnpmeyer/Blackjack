@@ -28,34 +28,6 @@ public class Blackjack {
 	/* I am ommitting a constructor method.
 	*/
 
-	//Currently being used for debugging/testing
-	public static void main(String[] args) {
-		/*
-		Blackjack demo = new Blackjack();
-		demo.dealFirstCards(playerCards);
-		System.out.println("\n");
-		for(int i=0;i<playerCards.length;i++) {
-			System.out.println(playerCards[i]);
-		}
-		demo.hitMe(playerCards);
-		System.out.println("\n");
-		for(int i=0;i<playerCards.length;i++) {
-			System.out.println(playerCards[i]);
-		}
-		System.out.println(demo.checkIfOver(playerCards));
-		playerCards[2]=14;
-		demo.setCardNames(playerCards, playerCardsNames);
-		System.out.println("\n");
-		for(int i=0;i<playerCards.length;i++) {
-			System.out.println(playerCardsNames[i]);
-		}
-		System.out.println("\n");
-		for(int i=0;i<playerCards.length;i++) {
-			System.out.println(playerCards[i]);
-		}
-		*/
-	}
-
 	/* Meant to be used only on a 'New Game' or 'Deal' Action in the interface class.
 	Simply empties the array, then deals two new values to the first cards.
 	*/
@@ -102,12 +74,43 @@ public class Blackjack {
 			it is 11.
 			*/
 			} else if (compareNumber==14) {
+
+				int arrayLength=0;
+				// Loop through array to find length, excluding zeros
+				for(int l=0; l<cardNumbersArray.length; l++) {
+					if(cardNumbersArray[l] != 0) {
+						arrayLength++;
+					}
+				}
+
+				//Sets Ace = 11 if Second card is greater than 10 and
+				//thus makes it think it should become a 1
+
+				if(arrayLength==2 && cardNumbersArray[0]==14 && (
+					cardNumbersArray[1]>10 && cardNumbersArray[1]<14)) {
+
+					actualValueArray[0] = 11;
+				}
+
+				//Tallies the sum so I can decide whether Ace is 11 or 1.
 				int currentSum=0;
-				int arrayLength = cardNumbersArray.length;
-				for(int k=arrayLength-1 ; arrayLength>0; k-=1) {
+				for(int k=0 ; k<cardNumbersArray.length; k++) {
 					currentSum += actualValueArray[k];
 				}
-				currentSum = currentSum-14;
+
+				/* Subtracts the current value of the ace from the actual value array
+				If the ace + the other numbers puts it over 21, it is a 1. Otherwise,
+				it is 11. Originally the ace will be a 14 since all hitMe actions
+				make the randomNumber the actual value
+
+				*/
+				if(actualValueArray[i]==1) {
+					currentSum = currentSum-1;
+				} else if(actualValueArray[i]==11) {
+					currentSum = currentSum-11;
+				} else if(actualValueArray[i]==14) {
+					currentSum = currentSum-14;
+				}
 
 				if(currentSum+11>21) {
 					actualValueArray[i] = 1;

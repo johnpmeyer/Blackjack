@@ -129,7 +129,7 @@ public class BlackjackInterface extends JFrame{
 		displayCards();
 		boolean over = blackjack.checkIfOver(blackjack.actualPlayerValues);
 		if(over==true) {
-			JOptionPane.showMessageDialog(this, "Bust! You lose ma'fucker" + "\n" +
+			JOptionPane.showMessageDialog(this, "Bust! You lose!" + "\n" +
 			"New game starting");
 		}
 	}
@@ -164,6 +164,19 @@ public class BlackjackInterface extends JFrame{
 						dealerCards.append("" + dealerCardName + "\n");
 					}
 			}
+		}
+
+		playerSum = sumCards(blackjack.actualPlayerValues, playerSum);
+		boolean over = blackjack.checkIfOver(blackjack.actualDealerValues);
+
+		if(over==true) {
+			JOptionPane.showMessageDialog(this, "Dealer busts. You win!");
+		} else if(dealerSum>=playerSum) {
+			JOptionPane.showMessageDialog(this, "Dealer wins with score: " + dealerSum +
+			"\n" + "Player Loses with score: " + playerSum);
+		} else {
+			JOptionPane.showMessageDialog(this, "Player wins with score: " + playerSum +
+			"\n" + "Dealer Loses with score: " + dealerSum);
 		}
 	}
 
