@@ -90,6 +90,7 @@ public class Blackjack {
 					cardNumbersArray[1]>10 && cardNumbersArray[1]<14)) {
 
 					actualValueArray[0] = 11;
+					actualValueArray[1] = 10;
 				}
 
 				//Tallies the sum so I can decide whether Ace is 11 or 1.
@@ -102,7 +103,6 @@ public class Blackjack {
 				If the ace + the other numbers puts it over 21, it is a 1. Otherwise,
 				it is 11. Originally the ace will be a 14 since all hitMe actions
 				make the randomNumber the actual value
-
 				*/
 				if(actualValueArray[i]==1) {
 					currentSum = currentSum-1;

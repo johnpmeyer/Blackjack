@@ -130,7 +130,7 @@ public class BlackjackInterface extends JFrame{
 		boolean over = blackjack.checkIfOver(blackjack.actualPlayerValues);
 		if(over==true) {
 			JOptionPane.showMessageDialog(this, "Bust! You lose!" + "\n" +
-			"New game starting");
+			"Select Deal to Start New Game");
 		}
 	}
 
